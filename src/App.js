@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import { updateText } from './redux/ActionCreators'
+import {connect} from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const mapStateToProps = state => {
+  return {
+    text:state.text
+  }
 }
 
-export default App;
+const mapDispatchToProps = {
+  updateText:(text)=>(updateText(text))
+}
+
+export function App(props) {
+  return (    
+    <div >  
+      <h3>{props.text.text}</h3>
+      <input value={props.text.text} onChange={(e)=>props.updateText(e.target.value)}/>
+    </div>
+  )  
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App)
